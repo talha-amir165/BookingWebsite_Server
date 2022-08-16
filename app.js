@@ -34,7 +34,9 @@ const HotelRouter = require('./routes/Hotel')
 app.use('/api', HotelRouter)
 const authRouter = require('./routes/auth')
 app.use('/auth', authRouter)
-
+app.get("/", (req, res) => {
+    res.send("hello")
+})
 app.use('/room', roomRouter)
 
 
