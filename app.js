@@ -42,8 +42,8 @@ const roomRouter = require('./routes/Rooms')
 const HotelRouter = require('./routes/Hotel')
 app.use('/api', HotelRouter)
 const authRouter = require('./routes/auth')
-app.use('/api/auth', authRouter)
-app.get("/api/", (req, res) => {
+app.use('/auth', authRouter)
+app.get("/", (req, res) => {
     res.send("hello")
 })
 app.use('/room', roomRouter)
