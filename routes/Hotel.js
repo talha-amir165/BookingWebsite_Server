@@ -5,20 +5,33 @@ const Hotel = require('../Models/Hotel')
 const Room = require("../Models/Room")
 
 //get
-router.get("/", async(req, res) => {
-        const { min, max, ...others } = req.query
-        try {
-            let hotels = await Hotel.find({
-                ...others,
-                cheapestPrice: { $gt: min | 1, $lte: max || 999 },
 
-            }).limit(req.query.limit)
-            res.status(200).json(hotels);
-        } catch (err) {
-            res.status(400).send("error getting hotel name")
-        }
-    })
-    //create
+
+router.get("/", async(req, res) => {
+    const { min, max, city, ...others } = req.query
+    try {
+        let hotels = await Hotel.find({
+            ...others,
+            city: { $regex: new RegExp(city, "i") },
+            cheapestPrice: { $gt: min | 1, $lte: max || 999 },
+
+        }).limit(req.query.limit)
+        res.status(200).json(hotels);
+        console.log(req.query)
+    } catch (err) {
+        res.status(400).send("error getting hotel name")
+    }
+})
+
+router.get("/adminHotel", async(req, res) => {
+    try {
+        let hotels = await Hotel.find({});
+        res.status(200).json(hotels);
+    } catch (err) {
+        res.status(400).send("Error getting hotel names");
+    }
+});
+//create
 router.post("/", async(req, res) => {
 
     let hotel = new Hotel(req.body);

@@ -20,13 +20,22 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 app.use(bodyParser.json())
 app.use(cors(corsOptions));
+const DB = 'mongodb+srv://Talha:chakwal112@cluster0.nczsgqj.mongodb.net/BookingWebsite?retryWrites=true&w=majority'
 
-mongoose.connect(url)
 
-const con = mongoose.connection
-con.on('open', () => {
-    console.log('connected...')
-})
+
+mongoose.connect(DB, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+
+
+    })
+    .then(() => {
+        console.log('Connected to the MongoDB database');
+    })
+    .catch((error) => {
+        console.error('Error connecting to the MongoDB database:', error);
+    });
 const roomRouter = require('./routes/Rooms')
 
 //app.use(express.json())
